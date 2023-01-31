@@ -262,6 +262,20 @@ class JiantBertModel(JiantTransformersModel):
         }
         mlm_weights_dict = {new_k: weights_dict[old_k] for new_k, old_k in mlm_weights_map.items()}
         return mlm_weights_dict
+    
+    def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
+        print("HIT")
+        output = self.forward(
+            input_ids=input_ids,
+            token_type_ids=segment_ids,
+            attention_mask=input_mask,
+            output_hidden_states=output_hidden_states,
+        )
+        return JiantModelOutput(
+            pooled=output.pooler_output,
+            unpooled=output.last_hidden_state,
+            other=output.hidden_states,
+        )
 
 
 @JiantTransformersModelFactory.register(ModelArchitectures.ROBERTA)
