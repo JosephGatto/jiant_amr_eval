@@ -225,6 +225,7 @@ class JiantTransformersModel(metaclass=abc.ABCMeta):
 class JiantBertModel(JiantTransformersModel):
     def __init__(self, baseObject):
         super().__init__(baseObject)
+        print("KHKDJFHGSLDKFJGHSLDKJFGHSDKLFGJHSLKDJFGHSKDLJFGHSLDKFJGH")
 
     @classmethod
     def normalize_tokenizations(cls, tokenizer, space_tokenization, target_tokenization):
@@ -264,7 +265,7 @@ class JiantBertModel(JiantTransformersModel):
         return mlm_weights_dict
     
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
-        print("HIT")
+        
         output = self.forward(
             input_ids=input_ids,
             token_type_ids=segment_ids,
