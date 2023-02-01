@@ -264,7 +264,7 @@ class JiantBertModel(JiantTransformersModel):
         return mlm_weights_dict
     
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
-        
+        print("HIT")
         output = self.forward(
             input_ids=input_ids,
             token_type_ids=segment_ids,
