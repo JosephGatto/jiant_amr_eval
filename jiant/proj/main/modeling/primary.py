@@ -264,10 +264,23 @@ class JiantBertModel(JiantTransformersModel):
         mlm_weights_dict = {new_k: weights_dict[old_k] for new_k, old_k in mlm_weights_map.items()}
         return mlm_weights_dict
     
+    
+    def split_list_by_val(self, x, value):
+        size = len(x)
+        idx_list = [idx + 1 for idx, val in
+                    enumerate(x) if val == value]
+
+        res = [x[i: j] for i, j in
+                zip([0] + idx_list, idx_list +
+                ([size] if idx_list[-1] != size else []))]
+        return res 
+    
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
         print(input_ids.shape)
         for id in range(input_ids.shape[0]):
-            print(' '.join([self.tokenizer.decode(x) for x in input_ids[id] if x not in self.tokenizer.all_special_ids]))
+            inp1, inp2 = self.split_list_by_val(input_ids[id], t.sep_token_id)
+            print(' '.join([self.tokenizer.decode(x) for x in inp1 if x not in self.tokenizer.all_special_ids]))
+            print(' '.join([self.tokenizer.decode(x) for x in inp2 if x not in self.tokenizer.all_special_ids]))
             print()
         print("*"*100)
         output = self.forward(
