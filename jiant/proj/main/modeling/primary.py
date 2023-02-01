@@ -225,7 +225,6 @@ class JiantTransformersModel(metaclass=abc.ABCMeta):
 class JiantBertModel(JiantTransformersModel):
     def __init__(self, baseObject):
         super().__init__(baseObject)
-        print("KHKDJFHGSLDKFJGHSLDKJFGHSDKLFGJHSLKDJFGHSKDLJFGHSLDKFJGH")
 
     @classmethod
     def normalize_tokenizations(cls, tokenizer, space_tokenization, target_tokenization):
