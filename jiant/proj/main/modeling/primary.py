@@ -178,7 +178,7 @@ class JiantTransformersModel(metaclass=abc.ABCMeta):
             baseObject.__class__.__name__, (self.__class__, baseObject.__class__), {}
         )
         self.__dict__ = baseObject.__dict__
-        self.tokenizer = AutoTokenizer.from_pretrained(self.config._name_or_path)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config._name_or_path)#, add_prefix_space=True)
 
     @classmethod
     @abc.abstractmethod
@@ -267,7 +267,7 @@ class JiantBertModel(JiantTransformersModel):
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
         print(input_ids.shape)
         for id in range(input_ids.shape[0]):
-            print(self.tokenizer.decode(input_ids[id]))
+            print(self.tokenizer.decode(input_ids[id], add_special_tokens=False))
             print()
         print("*"*100)
         output = self.forward(
