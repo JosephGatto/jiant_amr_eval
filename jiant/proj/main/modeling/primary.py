@@ -233,7 +233,8 @@ class JiantBertModel(JiantTransformersModel):
             space_tokenization = [token.lower() for token in space_tokenization]
         modifed_space_tokenization = bow_tag_tokens(space_tokenization)
         modifed_target_tokenization = process_wordpiece_tokens(target_tokenization)
-
+        print("NORMALIZE TOKENIZATIONS")
+        self.tokenizer = tokenizer
         return modifed_space_tokenization, modifed_target_tokenization
 
     def get_feat_spec(self, max_seq_length):
@@ -264,7 +265,7 @@ class JiantBertModel(JiantTransformersModel):
         return mlm_weights_dict
     
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
-        print("HIT")
+        print(self.tokenizer.decode(input_ids)
         output = self.forward(
             input_ids=input_ids,
             token_type_ids=segment_ids,
