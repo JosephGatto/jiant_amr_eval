@@ -265,7 +265,11 @@ class JiantBertModel(JiantTransformersModel):
         return mlm_weights_dict
     
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
-        print(self.tokenizer.decode(input_ids))
+        print(input_ids.shape)
+        for id in range(input_ids.shape[0]):
+            print(self.tokenizer.decode(input_ids[id]))
+            print()
+        print("*"*100)
         output = self.forward(
             input_ids=input_ids,
             token_type_ids=segment_ids,
