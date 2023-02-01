@@ -267,7 +267,7 @@ class JiantBertModel(JiantTransformersModel):
     def encode(self, input_ids, segment_ids, input_mask, output_hidden_states=True):
         print(input_ids.shape)
         for id in range(input_ids.shape[0]):
-            print([self.tokenizer.decode(x) for x in input_ids[id] if x not in self.tokenizer.all_special_ids])
+            print(' '.join([self.tokenizer.decode(x) for x in input_ids[id] if x not in self.tokenizer.all_special_ids]))
             print()
         print("*"*100)
         output = self.forward(
