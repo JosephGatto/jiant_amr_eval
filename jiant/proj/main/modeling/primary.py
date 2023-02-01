@@ -171,13 +171,14 @@ class JiantTransformersModelFactory:
         encoder = encoder_class(hf_model)
         return encoder
 
-
+from transformers import AutoTokenizer
 class JiantTransformersModel(metaclass=abc.ABCMeta):
     def __init__(self, baseObject):
         self.__class__ = type(
             baseObject.__class__.__name__, (self.__class__, baseObject.__class__), {}
         )
         self.__dict__ = baseObject.__dict__
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config._name_or_path)
 
     @classmethod
     @abc.abstractmethod
@@ -233,8 +234,7 @@ class JiantBertModel(JiantTransformersModel):
             space_tokenization = [token.lower() for token in space_tokenization]
         modifed_space_tokenization = bow_tag_tokens(space_tokenization)
         modifed_target_tokenization = process_wordpiece_tokens(target_tokenization)
-        print("NORMALIZE TOKENIZATIONS")
-        self.tokenizer = tokenizer
+        
         return modifed_space_tokenization, modifed_target_tokenization
 
     def get_feat_spec(self, max_seq_length):
